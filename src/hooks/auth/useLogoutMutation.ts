@@ -9,7 +9,7 @@ export function useLogoutMutation() {
       try {
         return await logoutRequest()
       } catch (err) {
-        const msg = getApiErrorMessage(err, 'Error al cerrar sesión en el servidor.')
+        const msg = getApiErrorMessage(err, 'Error al cerrar sesión.')
         throw new Error(msg, { cause: err })
       }
     },

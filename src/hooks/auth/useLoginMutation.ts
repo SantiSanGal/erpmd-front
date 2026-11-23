@@ -9,7 +9,7 @@ export function useLoginMutation() {
       try {
         return await loginRequest(credentials)
       } catch (err) {
-        const msg = getApiErrorMessage(err, 'Error al iniciar sesión. Verifica tus credenciales.')
+        const msg = getApiErrorMessage(err, 'Error al iniciar sesión.')
         throw new Error(msg, { cause: err })
       }
     },
