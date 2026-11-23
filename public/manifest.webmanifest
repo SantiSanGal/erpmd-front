@@ -1,0 +1,65 @@
+{
+  "name": "Facturitas · OCR de Facturas",
+  "short_name": "Facturitas",
+  "description": "Escanea y gestiona facturas con OCR inteligente para Android e iOS",
+  "start_url": "/",
+  "scope": "/",
+  "id": "/facturitas-pwa",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "theme_color": "#4f46e5",
+  "background_color": "#09090b",
+  "lang": "es",
+  "dir": "ltr",
+  "categories": ["finance", "business", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Cargar Factura",
+      "short_name": "Individual",
+      "description": "OCR instantáneo de una factura",
+      "url": "/?tab=single",
+      "icons": [{ "src": "/pwa-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Cargar Lote",
+      "short_name": "Lote",
+      "description": "Procesamiento masivo en batch",
+      "url": "/?tab=batch",
+      "icons": [{ "src": "/pwa-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Reportes",
+      "short_name": "Reportes",
+      "description": "Ver y exportar facturas del mes",
+      "url": "/?tab=reports",
+      "icons": [{ "src": "/pwa-192x192.png", "sizes": "192x192" }]
+    }
+  ]
+}
