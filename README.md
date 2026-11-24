@@ -89,14 +89,20 @@ src/
 
 ---
 
-## ⚙️ Configuración (.env)
+## ⚙️ Configuración de Entornos (.env)
 
-Crea un archivo `.env` en la raíz del proyecto:
+El proyecto utiliza una única variable `VITE_API_URL` configurada por entorno:
 
-```env
-# URL base del API Gateway (OCR, Batch, Reportes y Autenticación en puerto 8080)
-VITE_API_URL=http://localhost:8080
-```
+- **Desarrollo (`.env.development` o `.env`):**
+  ```env
+  VITE_API_URL=http://localhost:8080
+  ```
+- **Producción (`.env.production`):**
+  ```env
+  VITE_API_URL=https://erpmd.sanigama.com
+  ```
+
+Al ejecutar `npm run dev` se carga automáticamente la configuración de desarrollo, y al ejecutar `npm run deploy` se compila con el modo de producción.
 
 ---
 
