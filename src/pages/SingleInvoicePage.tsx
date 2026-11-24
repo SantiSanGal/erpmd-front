@@ -26,7 +26,9 @@ import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
 import { Progress } from '@/components/ui/progress'
 import { Separator } from '@/components/ui/separator'
 import { InvoiceThumbnailCard } from '@/components/invoice-thumbnail-card'
+import { CameraCaptureDialog } from '@/components/camera/CameraCaptureDialog'
 import { useSingleInvoice } from '@/hooks/single-invoice/useSingleInvoice'
+import { useIsMobileDevice } from '@/hooks/common/useIsMobileDevice'
 
 export function SingleInvoicePage() {
   const {
@@ -43,11 +45,28 @@ export function SingleInvoicePage() {
     setWarningMessage,
   } = useSingleInvoice()
 
+  const isMobileDevice = useIsMobileDevice()
+
   const [copiedRaw, setCopiedRaw] = useState(false)
   const [showRawJson, setShowRawJson] = useState(false)
+  const [isCameraOpen, setIsCameraOpen] = useState(false)
 
   const galleryInputRef = useRef<HTMLInputElement>(null)
   const cameraInputRef = useRef<HTMLInputElement>(null)
+
+  const handleCameraCapture = (file: File) => {
+    if (result) {
+      clearAll()
+    }
+    addImages([file])
+  }
+
+  const openCamera = () => {
+    if (result) {
+      clearAll()
+    }
+    setIsCameraOpen(true)
+  }
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -438,7 +457,7 @@ export function SingleInvoicePage() {
                       type="button"
                       variant="outline"
                       size="sm"
-                      onClick={() => cameraInputRef.current?.click()}
+                      onClick={openCamera}
                       disabled={isProcessing}
                       className="gap-1.5"
                     >
@@ -575,6 +594,30 @@ export function SingleInvoicePage() {
           </div>
         </div>
       )}
+
+      {/* Botón Flotante de Cámara (FAB) renderizado exclusivamente en teléfonos celulares mediante detección de dispositivo (sin media queries) */}
+      {isMobileDevice && (
+        <div className="fixed bottom-[calc(4.5rem+env(safe-area-inset-bottom))] right-4 z-40">
+          <Button
+            type="button"
+            size="icon"
+            onClick={openCamera}
+            disabled={isProcessing}
+            aria-label="Tomar foto de factura con la cámara"
+            title="Tomar foto de factura con la cámara"
+            className="size-14 rounded-full bg-gradient-to-tr from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-2xl shadow-indigo-500/50 hover:shadow-indigo-500/70 hover:scale-105 active:scale-95 transition-all p-0 flex items-center justify-center border-2 border-white/20 group cursor-pointer"
+          >
+            <Camera className="size-6 transition-transform group-hover:scale-110" />
+          </Button>
+        </div>
+      )}
+
+      {/* Diálogo con Visor de Cámara en vivo y gestión de permisos */}
+      <CameraCaptureDialog
+        open={isCameraOpen}
+        onOpenChange={setIsCameraOpen}
+        onCapture={handleCameraCapture}
+      />
     </div>
   )
 }
