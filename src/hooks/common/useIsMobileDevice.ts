@@ -25,14 +25,15 @@ export function checkIsMobilePhone(): boolean {
   const isIPhone = /iPhone|iPod/i.test(ua)
 
   // 2. Detección de teléfonos Android
-  // En Android, los teléfonos celulares incluyen "Android" y "Mobile" en su User Agent.
-  // (Las tablets Android típicamente incluyen "Android" pero omiten "Mobile").
   const isAndroidPhone = /Android/i.test(ua) && /Mobile/i.test(ua)
 
   // 3. Otros sistemas operativos móviles para celulares
   const isOtherPhone = /webOS|BlackBerry|IEMobile|Opera Mini|Windows Phone/i.test(ua)
 
-  // 4. Verificación complementaria mediante User-Agent Client Hints en navegadores Chromium modernos
+  // 4. iPad o dispositivos táctiles móviles iOS (iOS 13+ en iPad reporta MacIntel con touch)
+  const isIPad = /iPad/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+
+  // 5. Verificación complementaria mediante User-Agent Client Hints en navegadores Chromium modernos
   const nav = navigator as Navigator & {
     userAgentData?: {
       mobile?: boolean
@@ -41,5 +42,5 @@ export function checkIsMobilePhone(): boolean {
   }
   const isClientHintsMobile = nav.userAgentData?.mobile === true
 
-  return isIPhone || isAndroidPhone || isOtherPhone || (isClientHintsMobile && /Android/i.test(ua))
+  return isIPhone || isAndroidPhone || isOtherPhone || isIPad || (isClientHintsMobile && /Android/i.test(ua))
 }

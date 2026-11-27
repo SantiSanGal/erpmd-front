@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FileText, Layers, BarChart3, LogOut, Sun, Moon, ShieldCheck, Mail, AtSign } from 'lucide-react'
+import { FileText, Layers, BarChart3, Camera, LogOut, Sun, Moon, ShieldCheck, Mail, AtSign } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -12,7 +12,6 @@ import {
   DialogTitle,
   DialogDescription,
 } from '@/components/ui/dialog'
-import { CameraQrIcon } from '@/components/icons/CameraQrIcon'
 import { useAuth } from '@/hooks/auth/useAuth'
 import { useTheme } from '@/hooks/common/useTheme'
 import type { NavigationTab } from '@/types'
@@ -94,23 +93,24 @@ export function BottomNav({ activeTab, onSelectTab }: BottomNavProps) {
             <span className="text-[11px] leading-none tracking-tight">Lotes</span>
           </button>
 
-          {/* Tab Central Elevado: Cámara / QR Prominente */}
+          {/* Tab Central Elevado: Cámara Minimalista Morado Claro/Oscuro */}
           <div className="relative flex flex-1 flex-col items-center justify-center">
             <button
               type="button"
               onClick={handleCenterAction}
-              aria-label="Escanear comprobante con cámara o QR"
-              title="Escanear comprobante con cámara o QR"
+              aria-label="Tomar foto de factura con la cámara"
+              title="Tomar foto de factura con la cámara"
               className={cn(
                 'group -translate-y-5 flex size-14 items-center justify-center rounded-full',
-                'bg-gradient-to-tr from-lime-500 via-lime-400 to-emerald-400 text-slate-950',
-                'border-4 border-background shadow-xl shadow-lime-500/30',
-                'ring-2 ring-lime-500/20 active:scale-90 hover:scale-105 transition-all duration-200 cursor-pointer'
+                'bg-gradient-to-tr from-purple-600 via-violet-600 to-indigo-600 text-white',
+                'dark:from-purple-500 dark:via-violet-500 dark:to-indigo-500 dark:text-white',
+                'border-4 border-background shadow-xl shadow-purple-600/35 dark:shadow-purple-500/25',
+                'ring-2 ring-purple-500/25 active:scale-90 hover:scale-105 transition-all duration-200 cursor-pointer'
               )}
             >
-              <CameraQrIcon size={26} className="text-slate-950 stroke-[2.2] transition-transform group-hover:scale-110" />
+              <Camera className="size-6 text-white stroke-[2.2] transition-transform group-hover:scale-110" />
             </button>
-            <span className="-mt-3.5 text-[10px] font-semibold tracking-tight text-foreground/80">
+            <span className="-mt-3.5 text-[10px] font-semibold tracking-tight text-purple-600 dark:text-purple-400">
               Escanear
             </span>
           </div>

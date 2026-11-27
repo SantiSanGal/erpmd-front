@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { useTheme } from '@/hooks/common/useTheme'
 import { usePwaInstall } from '@/hooks/common/usePwaInstall'
+import { useIsMobileDevice } from '@/hooks/common/useIsMobileDevice'
 import { IosInstallDialog } from '@/components/pwa/IosInstallDialog'
 import { UserNav } from './UserNav'
 
@@ -12,25 +13,28 @@ interface HeaderProps {
 
 export function Header({ onToggleSidebar }: HeaderProps) {
   const { resolvedTheme, toggleTheme } = useTheme()
+  const isMobileDevice = useIsMobileDevice()
   const { isInstallable, isInstalled, isIosPromptOpen, setIsIosPromptOpen, promptInstall } =
     usePwaInstall()
 
   return (
     <>
-      <header className="sticky top-0 z-30 w-full border-b bg-background/95 backdrop-blur-md pt-[env(safe-area-inset-top,0px)] transition-colors">
+      <header className="sticky top-0 z-30 w-full border-b bg-background pt-[env(safe-area-inset-top,0px)] transition-colors">
         <div className="flex h-16 w-full items-center justify-between px-4 sm:px-6">
           <div className="flex items-center gap-3">
-            {/* Botón menú móvil */}
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              className="md:hidden"
-              onClick={onToggleSidebar}
-              aria-label="Abrir menú de navegación"
-            >
-              <Menu className="size-5" />
-            </Button>
+            {/* Botón menú móvil (Solo en escritorio / no móvil) */}
+            {!isMobileDevice && (
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="md:hidden"
+                onClick={onToggleSidebar}
+                aria-label="Abrir menú de navegación"
+              >
+                <Menu className="size-5" />
+              </Button>
+            )}
 
             {/* Logo y Nombre “Facturitas” */}
             <div className="flex items-center gap-2.5">
@@ -91,8 +95,8 @@ export function Header({ onToggleSidebar }: HeaderProps) {
               )}
             </Button>
 
-            {/* Avatar del usuario con Dropdown */}
-            <UserNav />
+            {/* Avatar del usuario con Dropdown (Solo en escritorio; en móviles está en la barra inferior) */}
+            {!isMobileDevice && <UserNav />}
           </div>
         </div>
       </header>

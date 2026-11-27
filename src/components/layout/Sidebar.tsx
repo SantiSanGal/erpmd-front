@@ -2,6 +2,7 @@ import { FileText, Layers, BarChart3, X, ChevronRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { useIsMobileDevice } from '@/hooks/common/useIsMobileDevice'
 import type { NavigationTab } from '@/types'
 
 interface SidebarProps {
@@ -47,6 +48,8 @@ export function Sidebar({
   isOpenMobile,
   onCloseMobile,
 }: SidebarProps) {
+  const isMobileDevice = useIsMobileDevice()
+
   const handleNavClick = (tab: NavigationTab) => {
     onSelectTab(tab)
     onCloseMobile()
@@ -150,8 +153,8 @@ export function Sidebar({
         {content}
       </aside>
 
-      {/* Drawer Off-canvas para pantallas móviles */}
-      {isOpenMobile && (
+      {/* Drawer Off-canvas para pantallas no móviles */}
+      {isOpenMobile && !isMobileDevice && (
         <div className="fixed inset-0 z-50 md:hidden">
           {/* Backdrop con blur */}
           <div
