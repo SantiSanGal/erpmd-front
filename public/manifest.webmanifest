@@ -1,7 +1,7 @@
 {
-  "name": "Facturitas · OCR de Facturas",
+  "name": "Facturitas · Procesamiento de Facturas",
   "short_name": "Facturitas",
-  "description": "Escanea y gestiona facturas con OCR inteligente para Android e iOS",
+  "description": "Escanea y gestiona facturas con procesamiento inteligente para Android e iOS",
   "start_url": "/",
   "scope": "/",
   "id": "/facturitas-pwa",
@@ -43,22 +43,22 @@
     {
       "name": "Cargar Factura",
       "short_name": "Individual",
-      "description": "OCR instantáneo de una factura",
-      "url": "/?tab=single",
+      "description": "Procesamiento instantáneo de una factura",
+      "url": "/",
       "icons": [{ "src": "/pwa-192x192.png", "sizes": "192x192" }]
     },
     {
       "name": "Cargar Lote",
       "short_name": "Lote",
       "description": "Procesamiento masivo en batch",
-      "url": "/?tab=batch",
+      "url": "/batch",
       "icons": [{ "src": "/pwa-192x192.png", "sizes": "192x192" }]
     },
     {
       "name": "Reportes",
       "short_name": "Reportes",
       "description": "Ver y exportar facturas del mes",
-      "url": "/?tab=reports",
+      "url": "/reportes",
       "icons": [{ "src": "/pwa-192x192.png", "sizes": "192x192" }]
     }
   ]

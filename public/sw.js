@@ -42,21 +42,8 @@ self.addEventListener('fetch', (event) => {
   const { request } = event
   const url = new URL(request.url)
 
-  // Las peticiones a la API nunca se deben servir desde caché antigua
-  if (url.pathname.startsWith('/api') || url.port === '8080' || url.port === '8081') {
-    event.respondWith(
-      fetch(request).catch(() => {
-        return new Response(
-          JSON.stringify({
-            error: 'Sin conexión a internet. Revisa tu red para conectar con el servidor OCR.',
-          }),
-          {
-            status: 503,
-            headers: { 'Content-Type': 'application/json' },
-          }
-        )
-      })
-    )
+  // Las peticiones que no son GET, las peticiones a la API o dominios externos nunca se sirven desde caché
+  if (request.method !== 'GET' || url.pathname.startsWith('/api') || url.origin !== self.location.origin) {
     return
   }
 

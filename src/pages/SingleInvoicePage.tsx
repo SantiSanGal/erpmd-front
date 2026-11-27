@@ -1,10 +1,9 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect, useCallback } from 'react'
 import {
   FileText,
   Camera,
   Upload,
   Trash2,
-  Sparkles,
   Loader2,
   CheckCircle2,
   AlertCircle,
@@ -61,12 +60,23 @@ export function SingleInvoicePage() {
     addImages([file])
   }
 
-  const openCamera = () => {
+  const openCamera = useCallback(() => {
     if (result) {
       clearAll()
     }
     setIsCameraOpen(true)
-  }
+  }, [result, clearAll])
+
+  // Escuchar evento para abrir la cámara desde el botón central del menú inferior
+  useEffect(() => {
+    const handleOpenCamEvent = () => {
+      openCamera()
+    }
+    window.addEventListener('facturitas:open-camera', handleOpenCamEvent)
+    return () => {
+      window.removeEventListener('facturitas:open-camera', handleOpenCamEvent)
+    }
+  }, [openCamera])
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -111,8 +121,7 @@ export function SingleInvoicePage() {
       {/* Encabezado */}
       <div>
         <div className="flex items-center gap-2 mb-1">
-          <Badge variant="outline" className="gap-1 border-primary/20 bg-primary/5 text-primary text-xs">
-            <Sparkles className="size-3" />
+          <Badge variant="outline" className="border-primary/20 bg-primary/5 text-primary text-xs">
             Carga Individual Instantánea
           </Badge>
         </div>
@@ -120,7 +129,7 @@ export function SingleInvoicePage() {
           Cargar Factura
         </h1>
         <p className="text-sm text-muted-foreground mt-1">
-          Sube una o más fotos de una misma factura (frente, dorso o varias páginas). Nuestro OCR con IA extraerá los datos automáticamente.
+          Sube una o más fotos de una misma factura.
         </p>
       </div>
 
@@ -187,7 +196,7 @@ export function SingleInvoicePage() {
                     )}
                   </div>
                   <CardDescription>
-                    Datos fiscales extraídos correctamente mediante OCR
+                    Datos fiscales extraídos correctamente mediante Procesamiento
                   </CardDescription>
                 </div>
               </div>
@@ -436,7 +445,7 @@ export function SingleInvoicePage() {
                     Arrastra tus fotos aquí
                   </p>
                   <p className="text-xs text-muted-foreground mt-1 max-w-sm">
-                    Soporta JPG, PNG, WEBP, HEIC (iPhone) de hasta 15MB por archivo.
+                    Soporta JPG, PNG, WEBP, HEIC de hasta 15MB por archivo.
                   </p>
 
                   {/* Botones de acción para móvil y desktop */}
@@ -453,17 +462,20 @@ export function SingleInvoicePage() {
                       Seleccionar Archivos
                     </Button>
 
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={openCamera}
-                      disabled={isProcessing}
-                      className="gap-1.5"
-                    >
-                      <Camera className="size-3.5" />
-                      Tomar Foto (Cámara)
-                    </Button>
+                    {/* El botón de tomar foto solo se renderiza si se detecta un dispositivo móvil */}
+                    {isMobileDevice && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={openCamera}
+                        disabled={isProcessing}
+                        className="gap-1.5"
+                      >
+                        <Camera className="size-3.5" />
+                        Tomar Foto (Cámara)
+                      </Button>
+                    )}
                   </div>
                 </div>
 
@@ -473,7 +485,7 @@ export function SingleInvoicePage() {
                     <div className="flex items-center justify-between text-xs font-medium">
                       <span className="flex items-center gap-2">
                         <Loader2 className="size-3.5 animate-spin text-primary" />
-                        Subiendo y procesando con Gemini OCR…
+                        Subiendo y procesando comprobante…
                       </span>
                       <span className="tabular-nums font-mono text-muted-foreground">
                         {uploadProgress}%
@@ -547,9 +559,9 @@ export function SingleInvoicePage() {
                     </span>
                   </div>
                   <div className="flex justify-between py-1">
-                    <span className="text-muted-foreground">Endpoint</span>
-                    <span className="font-mono text-[11px] text-muted-foreground truncate max-w-[150px]">
-                      /instantaneo
+                    <span className="text-muted-foreground">Modo</span>
+                    <span className="text-[11px] font-medium text-foreground">
+                      Extracción Instantánea
                     </span>
                   </div>
                 </div>
@@ -569,10 +581,7 @@ export function SingleInvoicePage() {
                       Procesando Factura…
                     </>
                   ) : (
-                    <>
-                      <Sparkles className="size-4" />
-                      Procesar Factura
-                    </>
+                    'Procesar Factura'
                   )}
                 </Button>
               </CardContent>
@@ -582,7 +591,7 @@ export function SingleInvoicePage() {
             <Card className="bg-muted/30">
               <CardContent className="pt-4 text-xs space-y-2 text-muted-foreground leading-relaxed">
                 <p className="font-semibold text-foreground flex items-center gap-1.5">
-                  <CheckCircle2 className="size-3.5 text-primary" /> Consejos para mejor OCR
+                  <CheckCircle2 className="size-3.5 text-primary" /> Consejos para mejor Procesamiento
                 </p>
                 <ul className="list-disc pl-4 space-y-1">
                   <li>Evita sombras y reflejos directos.</li>
@@ -592,23 +601,6 @@ export function SingleInvoicePage() {
               </CardContent>
             </Card>
           </div>
-        </div>
-      )}
-
-      {/* Botón Flotante de Cámara (FAB) renderizado exclusivamente en teléfonos celulares mediante detección de dispositivo (sin media queries) */}
-      {isMobileDevice && (
-        <div className="fixed bottom-[calc(4.5rem+env(safe-area-inset-bottom))] right-4 z-40">
-          <Button
-            type="button"
-            size="icon"
-            onClick={openCamera}
-            disabled={isProcessing}
-            aria-label="Tomar foto de factura con la cámara"
-            title="Tomar foto de factura con la cámara"
-            className="size-14 rounded-full bg-gradient-to-tr from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-2xl shadow-indigo-500/50 hover:shadow-indigo-500/70 hover:scale-105 active:scale-95 transition-all p-0 flex items-center justify-center border-2 border-white/20 group cursor-pointer"
-          >
-            <Camera className="size-6 transition-transform group-hover:scale-110" />
-          </Button>
         </div>
       )}
 

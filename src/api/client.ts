@@ -66,6 +66,15 @@ export const reportsClient = apiClient
  * Extrae un mensaje de error legible para el usuario
  */
 export function getApiErrorMessage(error: unknown, defaultMessage = 'Ocurrió un error inesperado'): string {
+  // Limpia detalles técnicos no deseados para el usuario
+  const sanitizeMessage = (msg: string): string => {
+    return msg
+      .replace(/\s*en el campo multipart ['"]?imagenes['"]?\.?/gi, '')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .replace(/\.?$/, '.')
+  }
+
   if (axios.isAxiosError(error)) {
     const axiosErr = error as AxiosError<Record<string, unknown> | string>
 
@@ -79,14 +88,14 @@ export function getApiErrorMessage(error: unknown, defaultMessage = 'Ocurrió un
 
     const data = axiosErr.response.data
     if (typeof data === 'string' && data.trim()) {
-      return data.trim()
+      return sanitizeMessage(data.trim())
     }
 
     if (data && typeof data === 'object') {
       for (const key of ['mensaje', 'message', 'detail', 'error', 'description', 'error_message']) {
         const val = data[key]
         if (typeof val === 'string' && val.trim()) {
-          return val.trim()
+          return sanitizeMessage(val.trim())
         }
       }
     }
@@ -95,7 +104,7 @@ export function getApiErrorMessage(error: unknown, defaultMessage = 'Ocurrió un
   }
 
   if (error instanceof Error && error.message) {
-    return error.message
+    return sanitizeMessage(error.message)
   }
 
   return defaultMessage

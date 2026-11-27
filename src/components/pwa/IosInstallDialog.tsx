@@ -1,4 +1,4 @@
-import { Share, PlusSquare, Smartphone } from 'lucide-react'
+import { Share, PlusSquare } from 'lucide-react'
 import {
   Dialog,
   DialogContent,
@@ -19,8 +19,8 @@ export function IosInstallDialog({ open, onOpenChange }: IosInstallDialogProps) 
       <DialogContent className="max-w-md">
         <DialogHeader>
           <div className="flex items-center gap-2.5 mb-1">
-            <div className="flex size-9 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm">
-              <Smartphone className="size-5" />
+            <div className="flex size-10 items-center justify-center rounded-xl bg-white shadow-xs ring-1 ring-border/40 p-1 overflow-hidden shrink-0">
+              <img src="/logo.png" alt="Facturitas Logo" className="size-full object-contain" />
             </div>
             <div>
               <DialogTitle>Instalar Facturitas en iOS</DialogTitle>

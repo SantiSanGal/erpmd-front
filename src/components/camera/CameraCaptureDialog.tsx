@@ -4,7 +4,6 @@ import {
   RotateCcw,
   SwitchCamera,
   AlertCircle,
-  Sparkles,
   Upload,
 } from 'lucide-react'
 import {
@@ -208,8 +207,7 @@ export function CameraCaptureDialog({
               </div>
             </div>
 
-            <Badge variant="outline" className="text-[10px] gap-1 border-primary/30 text-primary">
-              <Sparkles className="size-3" />
+            <Badge variant="outline" className="text-[10px] border-primary/30 text-primary">
               PWA Cámara
             </Badge>
           </DialogHeader>

@@ -9,7 +9,6 @@ import {
   AlertCircle,
   RefreshCw,
   ChevronRight,
-  Sparkles,
   FileCheck,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -107,8 +106,7 @@ export function BatchInvoicePage() {
       {/* Encabezado */}
       <div>
         <div className="flex items-center gap-2 mb-1">
-          <Badge variant="outline" className="gap-1 border-primary/20 bg-primary/5 text-primary text-xs">
-            <Sparkles className="size-3" />
+          <Badge variant="outline" className="border-primary/20 bg-primary/5 text-primary text-xs">
             Procesamiento en Batch
           </Badge>
         </div>

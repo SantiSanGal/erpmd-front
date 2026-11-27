@@ -55,7 +55,7 @@ export function InvoiceThumbnailCard({
             {isHeic ? 'Foto iPhone (HEIC)' : 'Comprobante listo'}
           </Badge>
           <span className="text-[10px] text-muted-foreground mt-1">
-            Listo para OCR con IA
+            Listo para Procesamiento
           </span>
         </div>
       )}

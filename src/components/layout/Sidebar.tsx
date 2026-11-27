@@ -1,4 +1,4 @@
-import { FileText, Layers, BarChart3, X, Sparkles, ChevronRight } from 'lucide-react'
+import { FileText, Layers, BarChart3, X, ChevronRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -23,7 +23,7 @@ const NAV_ITEMS: NavItem[] = [
   {
     id: 'single',
     label: 'Cargar Factura',
-    subtitle: 'OCR instantáneo de 1 factura',
+    subtitle: 'Procesamiento instantáneo de 1 factura',
     icon: FileText,
   },
   {
@@ -58,8 +58,8 @@ export function Sidebar({
         {/* Cabecera del Sidebar para vista móvil */}
         <div className="flex items-center justify-between md:hidden pb-2 border-b">
           <div className="flex items-center gap-2">
-            <div className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              <Sparkles className="size-4" />
+            <div className="flex size-8 items-center justify-center rounded-lg bg-white shadow-xs ring-1 ring-border/40 p-0.5 overflow-hidden shrink-0">
+              <img src="/logo.png" alt="Facturitas Logo" className="size-full object-contain" />
             </div>
             <span className="font-heading font-bold text-foreground">Facturitas</span>
           </div>

@@ -1,7 +1,6 @@
 import { useState, type FormEvent, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import {
-  Sparkles,
   Lock,
   User as UserIcon,
   Eye,
@@ -88,14 +87,14 @@ export function LoginPage() {
       <div className="w-full max-w-md">
         {/* Brand Header */}
         <div className="flex flex-col items-center text-center mb-6">
-          <div className="flex size-14 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-xl shadow-indigo-500/25 mb-3">
-            <Sparkles className="size-7" />
+          <div className="flex size-18 items-center justify-center rounded-2xl bg-white shadow-xl shadow-cyan-500/10 ring-1 ring-border/50 p-1.5 mb-3">
+            <img src="/logo.png" alt="Facturitas Logo" className="size-full object-contain" />
           </div>
           <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground">
             Facturitas
           </h1>
           <p className="text-sm text-muted-foreground mt-1">
-            Gestión Inteligente y OCR de Comprobantes
+            Gestión Inteligente y Procesamiento de Comprobantes
           </p>
         </div>
 
@@ -129,7 +128,7 @@ export function LoginPage() {
                     type="text"
                     autoComplete="username"
                     required
-                    placeholder="santiago.galvan@procesa.com.py"
+                    placeholder="usuario@ejemplo.com"
                     value={identifier}
                     onChange={(e) => setIdentifier(e.target.value)}
                     className="pl-9 h-10"

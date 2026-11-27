@@ -46,7 +46,7 @@ export function AppLayout() {
         />
 
         {/* Contenido principal de la página protegida */}
-        <main className="flex-1 overflow-x-hidden p-4 sm:p-6 lg:p-8 pb-24 md:pb-8 max-w-7xl mx-auto w-full">
+        <main className="flex-1 overflow-x-hidden p-4 sm:p-6 lg:p-8 pb-[calc(6rem+env(safe-area-inset-bottom,0px))] md:pb-8 max-w-7xl mx-auto w-full">
           <Outlet />
         </main>
       </div>
